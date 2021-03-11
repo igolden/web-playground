@@ -47,12 +47,15 @@ const ServusProfileManager = {
 
   // Submits
   submitWorkTypesForm: function (form) {
-    let copyData = JSON.parse(form);
+    let allCheckBoxes = document.querySelectorAll("input[type=checkbox]");
 
     let serialized = {};
-    copyData.map((item) => {
-      let { name, value } = item;
-      serialized[name] = value === "on" ? true : false;
+    allCheckBoxes.forEach((item) => {
+      if (item.checked) {
+        serialized[item.name] = true;
+      } else {
+        serialized[item.name] = false;
+      }
     });
 
     console.log("NEW_WORK_TYPES!: ", serialized);
@@ -67,24 +70,12 @@ const ServusProfileManager = {
     });
   },
   submitWorkAreaForm: function (form) {
-    let copyData = decodeURIComponent(form);
-    let address_line_1 = copyData.split("address_line_1=").pop().split("&")[0];
-    let address_line_2 = copyData.split("address_line_2=").pop().split("&")[0];
-    let city = copyData.split("city=").pop().split("&")[0];
-    let state = copyData.split("state=").pop().split("&")[0];
-    let zip_code = copyData.split("zip_code=").pop().split("&")[0];
-    let country = copyData.split("country=").pop().split("&")[0];
-    let service_radius = copyData.split("service_radius=").pop().split("&")[0];
-
-    let serialized = {
-      address_line_1,
-      address_line_2,
-      city,
-      state,
-      zip_code,
-      country,
-      service_radius,
-    };
+    let params = $("form").serializeArray();
+    let serialized = {};
+    params.map((item) => {
+      let { name, value } = item;
+      serialized[name] = value;
+    });
 
     console.log("NEW_WORK_AREA!: ", serialized);
 
@@ -98,30 +89,12 @@ const ServusProfileManager = {
     });
   },
   submitProfileDetailsForm: function (form) {
-    let copyData = decodeURIComponent(form);
-    let email = copyData.split("email=").pop().split("&")[0];
-    let cell_phone = copyData.split("cell_phone=").pop().split("&")[0];
-    let cell_provider = copyData.split("cell_provider=").pop().split("&")[0];
-    let address_line_1 = copyData.split("address_line_1=").pop().split("&")[0];
-    let address_line_2 = copyData.split("address_line_2=").pop().split("&")[0];
-    let city = copyData.split("city=").pop().split("&")[0];
-    let state = copyData.split("state=").pop().split("&")[0];
-    let zip_code = copyData.split("zip_code=").pop().split("&")[0];
-    let country = copyData.split("country=").pop().split("&")[0];
-    let about = copyData.split("about=").pop().split("&")[0];
-
-    let serialized = {
-      email,
-      cell_phone,
-      cell_provider,
-      address_line_1,
-      address_line_2,
-      city,
-      state,
-      zip_code,
-      country,
-      about,
-    };
+    let params = $("form").serializeArray();
+    let serialized = {};
+    params.map((item) => {
+      let { name, value } = item;
+      serialized[name] = value;
+    });
 
     console.log("NEW_PROFILE_DETAILS!: ", serialized);
 
@@ -135,14 +108,14 @@ const ServusProfileManager = {
     });
   },
   submitTaxForm: function (form) {
-    let copyData = decodeURIComponent(form);
-    let tax = copyData.split("tax=").pop().split("&")[0];
+    let params = $("form").serializeArray();
+    let serialized = {};
+    params.map((item) => {
+      let { name, value } = item;
+      serialized[name] = value;
+    });
 
-    let serialized = {
-      tax,
-    };
-
-    console.log("NEW_WORK_AREA!: ", serialized);
+    console.log("NEW_TAX_FORM!: ", serialized);
 
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/tax",
@@ -154,14 +127,14 @@ const ServusProfileManager = {
     });
   },
   submitPaymentForm: function (form) {
-    let copyData = decodeURIComponent(form);
-    let payment = copyData.split("payment=").pop().split("&")[0];
+    let params = $("form").serializeArray();
+    let serialized = {};
+    params.map((item) => {
+      let { name, value } = item;
+      serialized[name] = value;
+    });
 
-    let serialized = {
-      payment,
-    };
-
-    console.log("NEW_WORK_AREA!: ", serialized);
+    console.log("NEW_PAYMENT_FORM!: ", serialized);
 
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/payment",
@@ -173,14 +146,14 @@ const ServusProfileManager = {
     });
   },
   submitInsuranceForm: function (form) {
-    let copyData = decodeURIComponent(form);
-    let insurance = copyData.split("insurance=").pop().split("&")[0];
+    let params = $("form").serializeArray();
+    let serialized = {};
+    params.map((item) => {
+      let { name, value } = item;
+      serialized[name] = value;
+    });
 
-    let serialized = {
-      insurance,
-    };
-
-    console.log("NEW_WORK_AREA!: ", serialized);
+    console.log("NEW_INSURANCE_FORM!: ", serialized);
 
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/insurance",
@@ -192,17 +165,16 @@ const ServusProfileManager = {
     });
   },
   submitAgreementsForm: function (form) {
-    let copyData = decodeURIComponent(form);
-    let agreed_to_terms = copyData
-      .split("agreed_to_terms=")
-      .pop()
-      .split("&")[0];
+    let params = $("form").serializeArray();
+    let serialized = {};
+    params.map((item) => {
+      let { name, value } = item;
+      if (value === "on" || value === "off") {
+        serialized[name] = value === "on" ? true : false;
+      }
+    });
 
-    let serialized = {
-      agreed_to_terms: agreed_to_terms === `on"` ? true : false,
-    };
-
-    console.log("NEW_WORK_AREA!: ", serialized);
+    console.log("NEW_AGREEMENT!: ", serialized);
 
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/agreement",
