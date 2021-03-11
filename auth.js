@@ -1,21 +1,17 @@
 async function postData(url = "", data = {}) {
-  // Default options are marked with *
+  console.log("POSTING");
   const response = await fetch(url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
-    headers: {
-      "Content-Type": "application/json",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/json" },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
     body: JSON.stringify(data),
   });
   return response.json();
 }
-
 const AuthManager = {
   getSearchParams: function (k) {
     var p = {};
@@ -42,16 +38,14 @@ const AuthManager = {
   setCookie: function (name, value) {
     document.cookie = `${name}=${value}`;
   },
-
   redirectToAuth: function () {
     window.location = "/?reauth=true";
   },
-
   parseAuthentication: function () {
     var profileId = AuthManager.getSearchParams("profile_id");
     var sessionKey = AuthManager.getSearchParams("session_key");
 
-    console.log({ profileId, sessionKey });
+    // console.log({ profileId, sessionKey });
 
     if (profileId && sessionKey) {
       AuthManager.verifyAuthentication(profileId, sessionKey);
@@ -72,14 +66,12 @@ const AuthManager = {
     }
   },
   verifyAuthentication: function (profileId, sessionKey) {
-    console.log({ profileId, sessionKey });
-
+    // console.log({ profileId, sessionKey });
     postData("https://howdyeli.free.beeceptor.com/auth", {
       profile_id: profileId,
       session_key: sessionKey,
     }).then((data) => {
-      console.log(data);
-
+      console.log("NEW", data);
       // Cookie should timeout after 60 miniutes
       AuthManager.setCookie("profile_id", profileId);
       AuthManager.setCookie("session_key", sessionKey);
@@ -87,4 +79,6 @@ const AuthManager = {
   },
 };
 
-AuthManager.parseAuthentication();
+window.onload = function () {
+  AuthManager.parseAuthentication();
+};

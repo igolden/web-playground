@@ -4,67 +4,103 @@ const ServusProfileManager = {
     $("#work-types-form").submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
-      ServusProfileManager.submitWorkTypesForm();
+      let values = JSON.stringify($(this).serializeArray());
+      ServusProfileManager.submitWorkTypesForm(values);
     });
     $("#work-area-form").submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
-      ServusProfileManager.submitWorkAreaForm();
+      let values = JSON.stringify($(this).serialize());
+      ServusProfileManager.submitWorkAreaForm(values);
     });
     $("#profile-details-form").submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
-      ServusProfileManager.submitProfileDetailsForm();
+      let values = JSON.stringify($(this).serialize());
+      ServusProfileManager.submitProfileDetailsForm(values);
     });
     $("#tax-form").submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
-      ServusProfileManager.submitTaxForm();
+      let value = JSON.stringify($(this).serialize());
+      ServusProfileManager.submitTaxForm(value);
     });
     $("#payment-form").submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
-      ServusProfileManager.submitPaymentForm();
+      let values = JSON.stringify($(this).serialize());
+      ServusProfileManager.submitPaymentForm(values);
     });
     $("#insurance-form").submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
-      ServusProfileManager.submitInsuranceForm();
+      let values = JSON.stringify($(this).serialize());
+      ServusProfileManager.submitInsuranceForm(values);
     });
     $("#agreements-form").submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
-      ServusProfileManager.submitAgreementsForm();
+      let values = JSON.stringify($(this).serialize());
+      ServusProfileManager.submitAgreementsForm(values);
     });
   },
 
-  /*
-    1. Get Form Values, build to object
-    2. Serialize data: let values = JSON.stringify($(this).serializeArray());
-    3. Submit
-  */
   // Submits
   submitWorkTypesForm: function (form) {
+    let copyData = JSON.parse(form);
+
+    let serialized = {};
+    copyData.map((item) => {
+      let { name, value } = item;
+      serialized[name] = value === "on" ? true : false;
+    });
+
+    console.log("NEW_WORK_TYPES!: ", serialized);
+
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/work-types",
       type: "post",
-      data: form,
+      data: serialized,
       success: function () {
-        console.log("Submission Successful: ", form);
+        console.log("Submission Successful: ", serialized);
       },
     });
   },
   submitWorkAreaForm: function (form) {
+    var copyData = decodeURIComponent(form);
+    let address_line_1 = copyData.split("address_line_1=").pop().split("&")[0];
+    let address_line_2 = copyData.split("address_line_2=").pop().split("&")[0];
+    let city = copyData.split("city=").pop().split("&")[0];
+    let state = copyData.split("state=").pop().split("&")[0];
+    let zip_code = copyData.split("zip_code=").pop().split("&")[0];
+    let country = copyData.split("country=").pop().split("&")[0];
+    let service_radius = copyData.split("service_radius=").pop().split("&")[0];
+
+    let serialized = {
+      address_line_1,
+      address_line_2,
+      city,
+      state,
+      zip_code,
+      country,
+      service_radius,
+    };
+
+    console.log("NEW_WORK_AREA!: ", serialized);
+
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/work-area",
       type: "post",
-      data: form,
+      data: serialized,
       success: function () {
-        console.log("Submission Successful: ", form);
+        console.log("Submission Successful: ", serialized);
       },
     });
   },
   submitProfileDetailsForm: function (form) {
+    let copyData = JSON.parse(form);
+    console.log("COPY: ", copyData);
+
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/profile-details",
       type: "post",
@@ -75,6 +111,9 @@ const ServusProfileManager = {
     });
   },
   submitTaxForm: function (form) {
+    let copyData = JSON.parse(form);
+    console.log("COPY: ", copyData);
+
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/tax",
       type: "post",
@@ -85,6 +124,9 @@ const ServusProfileManager = {
     });
   },
   submitPaymentForm: function (form) {
+    let copyData = JSON.parse(form);
+    console.log("COPY: ", copyData);
+
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/payment",
       type: "post",
@@ -95,6 +137,9 @@ const ServusProfileManager = {
     });
   },
   submitInsuranceForm: function (form) {
+    let copyData = JSON.parse(form);
+    console.log("COPY: ", copyData);
+
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/insurance",
       type: "post",
@@ -105,6 +150,9 @@ const ServusProfileManager = {
     });
   },
   submitAgreementsForm: function (form) {
+    let copyData = JSON.parse(form);
+    console.log("COPY: ", copyData);
+
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/agreement",
       type: "post",
