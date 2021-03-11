@@ -59,6 +59,6 @@ const HomeManager = {
   },
 };
 
-window.onload = function () {
+document.onload = function () {
   HomeManager.checkReauth();
 };
