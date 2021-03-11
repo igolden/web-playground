@@ -1,11 +1,121 @@
-// Callback to authenticate
-// window.onload = function() {
-// auth function here
-// }
-// function getCookie(cname) {}
-
 const ServusProfileManager = {
-  // cname = cookie name
+  init: function () {
+    // Listeners
+    $("#work-types-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      ServusProfileManager.submitWorkTypesForm();
+    });
+    $("#work-area-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      ServusProfileManager.submitWorkAreaForm();
+    });
+    $("#profile-details-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      ServusProfileManager.submitProfileDetailsForm();
+    });
+    $("#tax-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      ServusProfileManager.submitTaxForm();
+    });
+    $("#payment-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      ServusProfileManager.submitPaymentForm();
+    });
+    $("#insurance-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      ServusProfileManager.submitInsuranceForm();
+    });
+    $("#agreements-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      ServusProfileManager.submitAgreementsForm();
+    });
+  },
+
+  /*
+    1. Get Form Values, build to object
+    2. Serialize data: let values = JSON.stringify($(this).serializeArray());
+    3. Submit
+  */
+  // Submits
+  submitWorkTypesForm: function (form) {
+    $.ajax({
+      url: "https://howdyeli.free.beeceptor.com/work-types",
+      type: "post",
+      data: form,
+      success: function () {
+        console.log("Submission Successful: ", form);
+      },
+    });
+  },
+  submitWorkAreaForm: function (form) {
+    $.ajax({
+      url: "https://howdyeli.free.beeceptor.com/work-area",
+      type: "post",
+      data: form,
+      success: function () {
+        console.log("Submission Successful: ", form);
+      },
+    });
+  },
+  submitProfileDetailsForm: function (form) {
+    $.ajax({
+      url: "https://howdyeli.free.beeceptor.com/profile-details",
+      type: "post",
+      data: form,
+      success: function () {
+        console.log("Submission Successful: ", form);
+      },
+    });
+  },
+  submitTaxForm: function (form) {
+    $.ajax({
+      url: "https://howdyeli.free.beeceptor.com/tax",
+      type: "post",
+      data: form,
+      success: function () {
+        console.log("Submission Successful: ", form);
+      },
+    });
+  },
+  submitPaymentForm: function (form) {
+    $.ajax({
+      url: "https://howdyeli.free.beeceptor.com/payment",
+      type: "post",
+      data: form,
+      success: function () {
+        console.log("Submission Successful: ", form);
+      },
+    });
+  },
+  submitInsuranceForm: function (form) {
+    $.ajax({
+      url: "https://howdyeli.free.beeceptor.com/insurance",
+      type: "post",
+      data: form,
+      success: function () {
+        console.log("Submission Successful: ", form);
+      },
+    });
+  },
+  submitAgreementsForm: function (form) {
+    $.ajax({
+      url: "https://howdyeli.free.beeceptor.com/agreement",
+      type: "post",
+      data: form,
+      success: function () {
+        console.log("Submission Successful: ", form);
+      },
+    });
+  },
+
+  // Cookies
   getCookie: function (cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -31,10 +141,5 @@ const ServusProfileManager = {
 };
 
 window.onload = function () {
-  let cookie = ServusProfileManager.getCookie("notexist");
-
-  if (cookie.length === 0) {
-    ServusProfileManager.redirectToAuth();
-    return;
-  }
+  ServusProfileManager.init();
 };

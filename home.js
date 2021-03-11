@@ -1,9 +1,3 @@
-// Callback to authenticate
-// window.onload = function() {
-// auth function here
-// }
-// function getCookie(cname) {}
-
 const HomeManager = {
   getSearchParams: function (k) {
     var p = {};
@@ -26,6 +20,7 @@ const HomeManager = {
       }
     }
   },
+
   checkReauth: function () {
     let reauth = HomeManager.getSearchParams("reauth");
     console.log(reauth);
@@ -34,7 +29,7 @@ const HomeManager = {
       reauthToast.addClass("show-toast");
     }
   },
-  // cname = cookie name
+
   getCookie: function (cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -59,6 +54,6 @@ const HomeManager = {
   },
 };
 
-document.onload = function () {
+window.onload = function () {
   HomeManager.checkReauth();
 };
