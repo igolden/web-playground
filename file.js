@@ -37,6 +37,24 @@ const ServusProfileManager = {
       let values = JSON.stringify($(this).serialize());
       ServusProfileManager.submitInsuranceForm(values);
     });
+    $("#certifications-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      let values = JSON.stringify($(this).serialize());
+      ServusProfileManager.submitCertificationsForm(values);
+    });
+    $("#demographics-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      let values = JSON.stringify($(this).serialize());
+      ServusProfileManager.submitDemographicsForm(values);
+    });
+    $("#hours-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      let values = JSON.stringify($(this).serialize());
+      ServusProfileManager.submitHoursForm(values);
+    });
     $("#agreements-form").submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -157,6 +175,67 @@ const ServusProfileManager = {
 
     $.ajax({
       url: "https://howdyeli.free.beeceptor.com/insurance",
+      type: "post",
+      data: serialized,
+      success: function () {
+        console.log("Submission Successful: ", serialized);
+      },
+    });
+  },
+  submitCertificationsForm: function (form) {
+    let params = $("form").serializeArray();
+    let serialized = {};
+    params.map((item) => {
+      let { name, value } = item;
+      serialized[name] = value;
+    });
+
+    console.log("NEW_CERTIFICATIONS_FORM!: ", serialized);
+
+    $.ajax({
+      url: "https://howdyeli.free.beeceptor.com/certifications",
+      type: "post",
+      data: serialized,
+      success: function () {
+        console.log("Submission Successful: ", serialized);
+      },
+    });
+  },
+  submitDemographicsForm: function (form) {
+    let allCheckBoxes = document.querySelectorAll("input[type=checkbox]");
+
+    let serialized = {};
+    allCheckBoxes.forEach((item) => {
+      if (item.checked) {
+        serialized[item.name] = true;
+      } else {
+        serialized[item.name] = false;
+      }
+    });
+
+    console.log("NEW_DEMOGRAPHICS_FORM!: ", serialized);
+
+    $.ajax({
+      url: "https://howdyeli.free.beeceptor.com/demographics",
+      type: "post",
+      data: serialized,
+      success: function () {
+        console.log("Submission Successful: ", serialized);
+      },
+    });
+  },
+  submitHoursForm: function (form) {
+    let params = $("form").serializeArray();
+    let serialized = {};
+    params.map((item) => {
+      let { name, value } = item;
+      serialized[name] = value;
+    });
+
+    console.log("NEW_HOURS_FORM!: ", serialized);
+
+    $.ajax({
+      url: "https://howdyeli.free.beeceptor.com/hours",
       type: "post",
       data: serialized,
       success: function () {
