@@ -76,16 +76,33 @@ const ServusProfileManager = {
       }
     });
 
+    console.log({ form });
     console.log("NEW_WORK_TYPES!: ", serialized);
 
-    $.ajax({
-      url: "https://howdyeli2.free.beeceptor.com/work-types",
-      type: "post",
-      data: serialized,
-      success: function () {
-        console.log("Submission Successful: ", serialized);
-      },
-    });
+    var submitBtn = document
+      .getElementById("work-types-form")
+      .querySelector('input[type="submit"]');
+    console.log({ submitBtn });
+    $(submitBtn).val("load");
+    setTimeout(function () {
+      $.ajax({
+        url: "https://interceptor.ngrok.io/work_types",
+        type: "post",
+        data: serialized,
+        success: function () {
+          submitBtn.innerText = "Submit";
+          $(submitBtn).val("Submit");
+        },
+        error: function (e) {
+          let elm = document.createElement("p");
+          elm.innerText = "Sorry bub.";
+          $(form).append(elm);
+        },
+      });
+    }, 1200);
+
+
+    console.log("Submission Successful: ", serialized);
   },
   submitWorkAreaForm: function (form) {
     let params = $("form").serializeArray();
@@ -159,7 +176,7 @@ const ServusProfileManager = {
     console.log("NEW_PAYMENT_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli2.free.beeceptor.com/payment",
+      url: "https://interceptor.ngrok.io/work_types",
       type: "post",
       data: serialized,
       success: function () {
