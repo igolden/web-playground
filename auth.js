@@ -1,5 +1,4 @@
 async function postData(url = "", data = {}) {
-  console.log("POSTING");
   const response = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -71,7 +70,6 @@ const AuthManager = {
       profile_id: profileId,
       session_key: sessionKey,
     }).then((data) => {
-      console.log("NEW", data);
       // Cookie should timeout after 60 miniutes
       AuthManager.setCookie("profile_id", profileId);
       AuthManager.setCookie("session_key", sessionKey);

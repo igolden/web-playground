@@ -1,7 +1,6 @@
 const TimePicker = {
   init: function () {
     $(document).ready(function () {
-      console.log("TIMEPICKER_INIT");
       // Create Time Pickers
       $(".timepicker-start").timepicker({
         timeFormat: "h:mm p",

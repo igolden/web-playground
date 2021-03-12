@@ -107,6 +107,10 @@ const ServusProfileManager = {
     });
   },
   submitProfileDetailsForm: function (form) {
+    let allFiles = document.querySelectorAll("input[type=file]");
+    let gotFiles = allFiles[0].files;
+    console.log("GOT_PROFILE_FILES:    ", gotFiles);
+
     let params = $("form").serializeArray();
     let serialized = {};
     params.map((item) => {
@@ -183,13 +187,11 @@ const ServusProfileManager = {
     });
   },
   submitCertificationsForm: function (form) {
-    let params = $("form").serializeArray();
-    let serialized = {};
-    params.map((item) => {
-      let { name, value } = item;
-      serialized[name] = value;
-    });
+    let allFiles = document.querySelectorAll("input[type=file]");
+    let gotFiles = allFiles[0].files;
+    console.log("GOT_CERTIFICATION_FILES:    ", gotFiles);
 
+    let serialized = {};
     console.log("NEW_CERTIFICATIONS_FORM!: ", serialized);
 
     $.ajax({
@@ -230,6 +232,15 @@ const ServusProfileManager = {
     params.map((item) => {
       let { name, value } = item;
       serialized[name] = value;
+    });
+
+    let allCheckBoxes = document.querySelectorAll("input[type=checkbox]");
+    allCheckBoxes.forEach((item) => {
+      if (item.checked) {
+        serialized[item.name] = true;
+      } else {
+        serialized[item.name] = false;
+      }
     });
 
     console.log("NEW_HOURS_FORM!: ", serialized);
