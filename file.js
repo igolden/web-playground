@@ -79,7 +79,7 @@ const ServusProfileManager = {
     console.log("NEW_WORK_TYPES!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli.free.beeceptor.com/work-types",
+      url: "https://howdyeli2.free.beeceptor.com/work-types",
       type: "post",
       data: serialized,
       success: function () {
@@ -98,7 +98,7 @@ const ServusProfileManager = {
     console.log("NEW_WORK_AREA!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli.free.beeceptor.com/work-area",
+      url: "https://howdyeli2.free.beeceptor.com/work-area",
       type: "post",
       data: serialized,
       success: function () {
@@ -121,7 +121,7 @@ const ServusProfileManager = {
     console.log("NEW_PROFILE_DETAILS!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli.free.beeceptor.com/profile-details",
+      url: "https://howdyeli2.free.beeceptor.com/profile-details",
       type: "post",
       data: serialized,
       success: function () {
@@ -140,7 +140,7 @@ const ServusProfileManager = {
     console.log("NEW_TAX_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli.free.beeceptor.com/tax",
+      url: "https://howdyeli2.free.beeceptor.com/tax",
       type: "post",
       data: serialized,
       success: function () {
@@ -159,7 +159,7 @@ const ServusProfileManager = {
     console.log("NEW_PAYMENT_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli.free.beeceptor.com/payment",
+      url: "https://howdyeli2.free.beeceptor.com/payment",
       type: "post",
       data: serialized,
       success: function () {
@@ -178,7 +178,7 @@ const ServusProfileManager = {
     console.log("NEW_INSURANCE_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli.free.beeceptor.com/insurance",
+      url: "https://howdyeli2.free.beeceptor.com/insurance",
       type: "post",
       data: serialized,
       success: function () {
@@ -195,7 +195,7 @@ const ServusProfileManager = {
     console.log("NEW_CERTIFICATIONS_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli.free.beeceptor.com/certifications",
+      url: "https://howdyeli2.free.beeceptor.com/certifications",
       type: "post",
       data: serialized,
       success: function () {
@@ -218,7 +218,7 @@ const ServusProfileManager = {
     console.log("NEW_DEMOGRAPHICS_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli.free.beeceptor.com/demographics",
+      url: "https://howdyeli2.free.beeceptor.com/demographics",
       type: "post",
       data: serialized,
       success: function () {
@@ -246,7 +246,7 @@ const ServusProfileManager = {
     console.log("NEW_HOURS_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli.free.beeceptor.com/hours",
+      url: "https://howdyeli2.free.beeceptor.com/hours",
       type: "post",
       data: serialized,
       success: function () {
@@ -267,37 +267,13 @@ const ServusProfileManager = {
     console.log("NEW_AGREEMENT!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli.free.beeceptor.com/agreement",
+      url: "https://howdyeli2.free.beeceptor.com/agreement",
       type: "post",
       data: form,
       success: function () {
         console.log("Submission Successful: ", form);
       },
     });
-  },
-
-  // Cookies
-  getCookie: function (cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(";");
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == " ") {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  },
-  setCookie: function (name, value) {
-    document.cookie = `${name}=${value}`;
-  },
-
-  redirectToAuth: function () {
-    window.location = "/?reauth=true";
   },
 };
 
