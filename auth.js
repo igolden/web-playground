@@ -44,8 +44,6 @@ const AuthManager = {
     var profileId = AuthManager.getSearchParams("profile_id");
     var sessionKey = AuthManager.getSearchParams("session_key");
 
-    console.log("Rich Mistakes: ", { profileId, sessionKey });
-
     if (profileId && sessionKey) {
       AuthManager.verifyAuthentication(profileId, sessionKey);
       return;
@@ -65,7 +63,6 @@ const AuthManager = {
     }
   },
   verifyAuthentication: function (profileId, sessionKey) {
-    console.log("VERIFIED", { profileId, sessionKey });
     postData("https://howdyeli2.free.beeceptor.com/auth", {
       profile_id: profileId,
       session_key: sessionKey,

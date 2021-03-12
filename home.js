@@ -23,7 +23,6 @@ const HomeManager = {
 
   checkReauth: function () {
     let reauth = HomeManager.getSearchParams("reauth");
-    console.log(reauth);
     var reauthToast = $("#reauth-toast");
     if (reauth === "true") {
       reauthToast.addClass("show-toast");
