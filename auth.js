@@ -9,7 +9,7 @@ async function postData(url = "", data = {}) {
     referrerPolicy: "no-referrer",
     body: data,
   });
-  return response
+  return response;
 }
 const AuthManager = {
   getSearchParams: function (k) {
@@ -38,7 +38,7 @@ const AuthManager = {
     document.cookie = `${name}=${value}`;
   },
   redirectToAuth: function () {
-    //window.location = "/?error=Session Expired. Please login again.";
+    window.location = "/?error=Session Expired. Please login again.";
   },
   parseAuthentication: function () {
     var profileId = AuthManager.getSearchParams("profile_id");
