@@ -179,6 +179,15 @@ const ServusProfileManager = {
       serialized[name] = value;
     });
 
+    let allCheckBoxes = document.querySelectorAll("input[type=checkbox]");
+    allCheckBoxes.forEach((item) => {
+      if (item.checked) {
+        serialized[item.name] = true;
+      } else {
+        serialized[item.name] = false;
+      }
+    });
+
     console.log("NEW_TAX_FORM!: ", serialized);
 
     $.ajax({
