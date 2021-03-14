@@ -9,7 +9,7 @@ async function postData(url = "", data = {}) {
     referrerPolicy: "no-referrer",
     body: data,
   });
-  return response
+  return response;
 }
 const AuthManager = {
   getSearchParams: function (k) {
@@ -35,10 +35,16 @@ const AuthManager = {
     return "";
   },
   setCookie: function (name, value) {
-    document.cookie = `${name}=${value}`;
+    var now = new Date();
+    var time = now.getTime();
+    time += 3600 * 1000;
+    now.setTime(time);
+    now.toUTCString();
+
+    document.cookie = `${name}=${value}; expires=${now.toUTCString()}`;
   },
   redirectToAuth: function () {
-    //window.location = "/?error=Session Expired. Please login again.";
+    window.location = "/?error=Session Expired. Please login again.";
   },
   parseAuthentication: function () {
     var profileId = AuthManager.getSearchParams("profile_id");

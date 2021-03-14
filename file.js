@@ -1,23 +1,29 @@
 const ServusProfileManager = {
   init: function () {
     // Listeners
-    $("#work-types-form").submit(function (e) {
+    $("#company-info-form").submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
       let values = JSON.stringify($(this).serializeArray());
-      ServusProfileManager.submitWorkTypesForm(values);
-    });
-    $("#work-area-form").submit(function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      let values = JSON.stringify($(this).serialize());
-      ServusProfileManager.submitWorkAreaForm(values);
+      ServusProfileManager.submitCompanyInfoForm(values);
     });
     $("#profile-details-form").submit(function (e) {
       e.preventDefault();
       e.stopPropagation();
       let values = JSON.stringify($(this).serialize());
       ServusProfileManager.submitProfileDetailsForm(values);
+    });
+    $("#service-and-trades-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      let values = JSON.stringify($(this).serializeArray());
+      ServusProfileManager.submitServiceAndTradesForm(values);
+    });
+    $("#work-area-form").submit(function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      let values = JSON.stringify($(this).serialize());
+      ServusProfileManager.submitWorkAreaForm(values);
     });
     $("#tax-form").submit(function (e) {
       e.preventDefault();
@@ -64,47 +70,7 @@ const ServusProfileManager = {
   },
 
   // Submits
-  submitWorkTypesForm: function (form) {
-    let allCheckBoxes = document.querySelectorAll("input[type=checkbox]");
-
-    let serialized = {};
-    allCheckBoxes.forEach((item) => {
-      if (item.checked) {
-        serialized[item.name] = true;
-      } else {
-        serialized[item.name] = false;
-      }
-    });
-
-    console.log({ form });
-    console.log("NEW_WORK_TYPES!: ", serialized);
-
-    var submitBtn = document
-      .getElementById("work-types-form")
-      .querySelector('input[type="submit"]');
-    console.log({ submitBtn });
-    $(submitBtn).val("load");
-    setTimeout(function () {
-      $.ajax({
-        url: "https://interceptor.ngrok.io/work_types",
-        type: "post",
-        data: serialized,
-        success: function () {
-          submitBtn.innerText = "Submit";
-          $(submitBtn).val("Submit");
-        },
-        error: function (e) {
-          let elm = document.createElement("p");
-          elm.innerText = "Sorry bub.";
-          $(form).append(elm);
-        },
-      });
-    }, 1200);
-
-
-    console.log("Submission Successful: ", serialized);
-  },
-  submitWorkAreaForm: function (form) {
+  submitCompanyInfoForm: function (form) {
     let params = $("form").serializeArray();
     let serialized = {};
     params.map((item) => {
@@ -112,10 +78,10 @@ const ServusProfileManager = {
       serialized[name] = value;
     });
 
-    console.log("NEW_WORK_AREA!: ", serialized);
+    console.log("NEW_COMPANY_INFO!: ", serialized);
 
     $.ajax({
-      url: "https://interceptor.ngrok.io/work-area",
+      url: "https://interceptor.ngrok.io/company_info",
       type: "post",
       data: serialized,
       success: function () {
@@ -146,12 +112,80 @@ const ServusProfileManager = {
       },
     });
   },
+  submitServiceAndTradesForm: function (form) {
+    let allCheckBoxes = document.querySelectorAll("input[type=checkbox]");
+
+    let serialized = {};
+    allCheckBoxes.forEach((item) => {
+      if (item.checked) {
+        serialized[item.name] = true;
+      } else {
+        serialized[item.name] = false;
+      }
+    });
+
+    console.log({ form });
+    console.log("NEW_WORK_TYPES!: ", serialized);
+
+    var submitBtn = document
+      .getElementById("service-and-trades-form")
+      .querySelector('input[type="submit"]');
+    console.log({ submitBtn });
+
+    $(submitBtn).val("load");
+    setTimeout(function () {
+      $.ajax({
+        url: "https://interceptor.ngrok.io/services_and_trades",
+        type: "post",
+        data: serialized,
+        success: function () {
+          submitBtn.innerText = "Submit";
+          $(submitBtn).val("Submit");
+        },
+        error: function (e) {
+          let elm = document.createElement("p");
+          elm.innerText = "Sorry bub.";
+          $(form).append(elm);
+        },
+      });
+    }, 1200);
+
+    console.log("Submission Successful: ", serialized);
+  },
+  submitWorkAreaForm: function (form) {
+    let params = $("form").serializeArray();
+    let serialized = {};
+    params.map((item) => {
+      let { name, value } = item;
+      serialized[name] = value;
+    });
+
+    console.log("NEW_WORK_AREA!: ", serialized);
+
+    $.ajax({
+      url: "https://interceptor.ngrok.io/work-area",
+      type: "post",
+      data: serialized,
+      success: function () {
+        console.log("Submission Successful: ", serialized);
+      },
+    });
+  },
   submitTaxForm: function (form) {
     let params = $("form").serializeArray();
     let serialized = {};
     params.map((item) => {
       let { name, value } = item;
       serialized[name] = value;
+    });
+
+    let allCheckBoxes = document.querySelectorAll("input[type=checkbox]");
+    allCheckBoxes.forEach((item) => {
+      if (item.checked) {
+        serialized[item.name] = true;
+      } else {
+        serialized[item.name] = false;
+      }
     });
 
     console.log("NEW_TAX_FORM!: ", serialized);
@@ -185,6 +219,10 @@ const ServusProfileManager = {
     });
   },
   submitInsuranceForm: function (form) {
+    let allFiles = document.querySelectorAll("input[type=file]");
+    let gotFiles = allFiles[0].files;
+    console.log("GOT_PROFILE_FILES:    ", gotFiles);
+
     let params = $("form").serializeArray();
     let serialized = {};
     params.map((item) => {
@@ -241,9 +279,9 @@ const ServusProfileManager = {
       success: function () {
         console.log("Submission Successful: ", serialized);
       },
-      error: function(e) {
-        window.location = "/?error=Server is down."
-      }
+      error: function (e) {
+        window.location = "/?error=Server is down.";
+      },
     });
   },
   submitHoursForm: function (form) {
@@ -289,9 +327,9 @@ const ServusProfileManager = {
     $.ajax({
       url: "https://interceptor.ngrok.io/agreement",
       type: "post",
-      data: form,
+      data: serialized,
       success: function () {
-        console.log("Submission Successful: ", form);
+        console.log("Submission Successful: ", serialized);
       },
     });
   },
