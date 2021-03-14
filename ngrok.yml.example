@@ -1,0 +1,14 @@
+authtoken: 5nmKn1Uu7EBWjUn9hz4MP_4S9Tqv1TDucCN4JAmrCie
+remote_management: null
+
+tunnels:
+  profile:
+    proto: http
+    addr: 3000
+    subdomain: servusprofile
+  api:
+    proto: http
+    addr: 6969
+    subdomain: inspector
+
+

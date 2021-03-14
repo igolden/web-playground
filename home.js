@@ -21,11 +21,18 @@ const HomeManager = {
     }
   },
 
-  checkReauth: function () {
-    let reauth = HomeManager.getSearchParams("reauth");
-    var reauthToast = $("#reauth-toast");
-    if (reauth === "true") {
-      reauthToast.addClass("show-toast");
+  checkError: function () {
+    console.log("ECHK");
+    let errParam = HomeManager.getSearchParams("error");
+    console.log({ errParam });
+    if (errParam !== undefined) {
+      if (errParam !== "") {
+        $("#reauth-toast").addClass("show-toast").text(decodeURIComponent(errParam));
+      } else {
+        $("#reauth-toast")
+          .addClass("show-toast")
+          .text("There's been an error. Try again later.");
+      }
     }
   },
 
@@ -48,11 +55,11 @@ const HomeManager = {
     document.cookie = `${name}=${value}`;
   },
 
-  redirectToAuth: function () {
-    window.location = "/?reauth=true";
+  redirectToError: function () {
+    window.location = "/?error=Session Expired";
   },
 };
 
 window.onload = function () {
-  HomeManager.checkReauth();
+  HomeManager.checkError();
 };

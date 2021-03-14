@@ -1,15 +1,15 @@
 async function postData(url = "", data = {}) {
   const response = await fetch(url, {
     method: "POST",
-    mode: "cors",
+    mode: "no-cors",
     cache: "no-cache",
     credentials: "same-origin",
     headers: { "Content-Type": "application/json" },
     redirect: "follow",
     referrerPolicy: "no-referrer",
-    body: JSON.stringify(data),
+    body: data,
   });
-  return response.json();
+  return response
 }
 const AuthManager = {
   getSearchParams: function (k) {
@@ -38,7 +38,7 @@ const AuthManager = {
     document.cookie = `${name}=${value}`;
   },
   redirectToAuth: function () {
-    window.location = "/?reauth=true";
+    //window.location = "/?error=Session Expired. Please login again.";
   },
   parseAuthentication: function () {
     var profileId = AuthManager.getSearchParams("profile_id");
@@ -63,7 +63,7 @@ const AuthManager = {
     }
   },
   verifyAuthentication: function (profileId, sessionKey) {
-    postData("https://howdyeli2.free.beeceptor.com/auth", {
+    postData("https://interceptor.ngrok.io/auth", {
       profile_id: profileId,
       session_key: sessionKey,
     }).then((data) => {

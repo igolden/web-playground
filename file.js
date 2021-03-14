@@ -115,7 +115,7 @@ const ServusProfileManager = {
     console.log("NEW_WORK_AREA!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli2.free.beeceptor.com/work-area",
+      url: "https://interceptor.ngrok.io/work-area",
       type: "post",
       data: serialized,
       success: function () {
@@ -138,7 +138,7 @@ const ServusProfileManager = {
     console.log("NEW_PROFILE_DETAILS!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli2.free.beeceptor.com/profile-details",
+      url: "https://interceptor.ngrok.io/profile",
       type: "post",
       data: serialized,
       success: function () {
@@ -157,7 +157,7 @@ const ServusProfileManager = {
     console.log("NEW_TAX_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli2.free.beeceptor.com/tax",
+      url: "https://interceptor.ngrok.io/tax",
       type: "post",
       data: serialized,
       success: function () {
@@ -195,7 +195,7 @@ const ServusProfileManager = {
     console.log("NEW_INSURANCE_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli2.free.beeceptor.com/insurance",
+      url: "https://interceptor.ngrok.io/insurance",
       type: "post",
       data: serialized,
       success: function () {
@@ -212,7 +212,7 @@ const ServusProfileManager = {
     console.log("NEW_CERTIFICATIONS_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli2.free.beeceptor.com/certifications",
+      url: "https://interceptor.ngrok.io/certifications",
       type: "post",
       data: serialized,
       success: function () {
@@ -235,12 +235,15 @@ const ServusProfileManager = {
     console.log("NEW_DEMOGRAPHICS_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli2.free.beeceptor.com/demographics",
+      url: "https://interceptor.ngrok.io/demographics",
       type: "post",
       data: serialized,
       success: function () {
         console.log("Submission Successful: ", serialized);
       },
+      error: function(e) {
+        window.location = "/?error=Server is down."
+      }
     });
   },
   submitHoursForm: function (form) {
@@ -263,7 +266,7 @@ const ServusProfileManager = {
     console.log("NEW_HOURS_FORM!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli2.free.beeceptor.com/hours",
+      url: "https://interceptor.ngrok.io/hours",
       type: "post",
       data: serialized,
       success: function () {
@@ -284,7 +287,7 @@ const ServusProfileManager = {
     console.log("NEW_AGREEMENT!: ", serialized);
 
     $.ajax({
-      url: "https://howdyeli2.free.beeceptor.com/agreement",
+      url: "https://interceptor.ngrok.io/agreement",
       type: "post",
       data: form,
       success: function () {
