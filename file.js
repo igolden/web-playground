@@ -219,6 +219,10 @@ const ServusProfileManager = {
     });
   },
   submitInsuranceForm: function (form) {
+    let allFiles = document.querySelectorAll("input[type=file]");
+    let gotFiles = allFiles[0].files;
+    console.log("GOT_PROFILE_FILES:    ", gotFiles);
+
     let params = $("form").serializeArray();
     let serialized = {};
     params.map((item) => {
